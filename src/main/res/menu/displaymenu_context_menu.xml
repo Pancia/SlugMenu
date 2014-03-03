@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/displaymenu_contextmenu_toratingbardialog"
+        android:title="@string/dzs_sm_action_settings" />
+    <item android:id="@+id/displaymenu_contextmenu_notification_settings"
+        android:title="@string/dzs_sm_action_settings" />
+</menu>

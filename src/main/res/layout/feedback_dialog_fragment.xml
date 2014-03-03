@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/feedback_dialog_edittext_message"/>
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/feedback_dialog_radiogroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bug"
+            android:id="@+id/feedback_dialog_radiobutton_bug"
+            android:layout_gravity="right"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feedback"
+            android:id="@+id/feedback_dialog_radiobutton_feedback"
+            android:layout_gravity="center_horizontal"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suggestion"
+            android:id="@+id/feedback_dialog_radiobutton_suggestion" />
+
+    </RadioGroup>
+
+</LinearLayout>

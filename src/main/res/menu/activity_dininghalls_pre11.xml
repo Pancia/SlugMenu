@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_rate"
+        android:titleCondensed="Rate"
+        android:orderInCategory="1"
+        android:visible="true"
+        android:showAsAction="always"
+        android:icon="@drawable/rate"/>
+    <item android:id="@+id/action_feedback"
+        android:title="Feedback"
+        android:orderInCategory="99"
+        android:icon="@drawable/feedback"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/dzs_sm_action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_reset"
+        android:title="Reset ShrdPrfs"
+        android:orderInCategory="999"/>
+</menu>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dzs_sm_transparent">#00000000</color>
+    <color name="dzs_sm_pressed">#002E3E</color>
+    <color name="dzs_sm_black">#000000</color>
+</resources>

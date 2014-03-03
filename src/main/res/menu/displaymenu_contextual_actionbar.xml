@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/displaymenu_contextual_actionbar_rate"
+        android:title="Rate Items"
+        android:icon="@drawable/rate"/>
+    <item android:id="@+id/displaymenu_contextual_actionbar_alerts"
+        android:title="Add Notification"
+        android:icon="@drawable/add_alert_notif"/>
+</menu>

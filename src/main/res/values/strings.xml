@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dzs_sm_app_name">Slug Menu: Beta</string>
+    <string name="dzs_sm_action_settings">Settings</string>
+    <string name="dzs_sm_breakfast">Breakfast</string>
+    <string name="dzs_sm_lunch">Lunch</string>
+    <string name="dzs_sm_dinner">Dinner</string>
+    <string name="dzs_sm_dh_nine">Nine and Ten</string>
+    <string name="dzs_sm_dh_porter">Porter and Kresge</string>
+    <string name="dzs_sm_dh_eight">Eight and Oakes</string>
+    <string name="dzs_sm_dh_cowell">Cowell and Stevenson</string>
+    <string name="dzs_sm_dh_crown">Crown and Merrill</string>
+    <string name="dzs_sm_unimplemented">Unimplemented!</string>
+    <string name="dzs_sm_optoutga">This app uses Google Analytics to collect behavioural information, and any crashes that may occur.\nBy not opting-out you will be helping me, the developer, but regardless of your choice, no personal or private information will be disclosed.</string>
+    <string name="dzs_sm_avgdhrating">Avg: -</string>
+    <string name="dzs_sm_dhnotavailable">Either the dining hall is closed, or I\'m not properly connected to the internet.</string>
+
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/displaymenu_row_container_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/displaymenu_row_visible_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:id="@+id/displaymenu_row_checkbox"
+            android:layout_gravity="center_horizontal|top"
+            android:checked="false" />
+
+        <TextView
+            android:id="@+id/displaymenu_row_textview_menuitem"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="45"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/dzs_sm_app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:text="0.0"
+            android:id="@+id/displaymenu_row_textview_rating" />
+
+        <RatingBar
+            android:id="@+id/displaymenu_row_ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:isIndicator="true"
+            android:rating="1"
+            android:numStars="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/displaymenu_row_expandable_layout"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/displaymenu_row_button_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:background="@drawable/add_note_toself"/>
+
+        <TextView
+            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+
+        <RatingBar
+            android:id="@+id/displaymenu_expanded_row_ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:isIndicator="false"
+            android:rating="0"
+            android:numStars="5"/>
+
+    </LinearLayout>
+
+</LinearLayout>
