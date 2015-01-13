@@ -77,7 +77,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	 * A listener will be attached to the button which will
 	 * either expand or collapse the expandable view
 	 *
-	 * @see #getExpandableView(View)
+	 * @see #getExpandableView(android.view.View)
 	 * @param parent the list view item
 	 * @ensure return!=null
 	 * @return a child of parent which is a button
@@ -94,7 +94,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	 * return parent.findViewById(R.id.expandable)
 	 * </pre>
 	 *
-	 * @see #getExpandToggleButton(View)
+	 * @see #getExpandToggleButton(android.view.View)
 	 * @param parent the list view item
 	 * @ensure return!=null
 	 * @return a child of parent which is a view (or often ViewGroup)
@@ -327,8 +327,8 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 		}
 
 		//required field that makes Parcelables from a Parcel
-		public static final Parcelable.Creator<SavedState> CREATOR =
-		new Parcelable.Creator<SavedState>() {
+		public static final Creator<SavedState> CREATOR =
+		new Creator<SavedState>() {
 			public SavedState createFromParcel(Parcel in) {
 				return new SavedState(in);
 			}
