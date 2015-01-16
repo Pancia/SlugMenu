@@ -12,6 +12,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +29,11 @@ public class JsonHttpRequest {
     private final int dtdate;
     private String dh;
 
+    public JsonHttpRequest(String url) {
+        this.url = url;
+        this.dtdate = -1;//invalid
+    }
+
     public JsonHttpRequest(String dh, int dtdate) {
         this.url = MenuParser.getUrl(dh, dtdate);
         this.dh = dh;
@@ -38,6 +44,10 @@ public class JsonHttpRequest {
         return MenuParser.parseString(
                 makeJsonHttpRequest(JsonHttpRequest.GET),
                 this.dh, this.dtdate);
+    }
+
+    public String getJsonRating(int method) {
+        return makeJsonHttpRequest(method);
     }
 
     public String makeJsonHttpRequest(int method) {
