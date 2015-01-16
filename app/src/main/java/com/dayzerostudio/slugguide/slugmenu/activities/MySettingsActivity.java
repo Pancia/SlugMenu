@@ -9,14 +9,10 @@ import android.preference.PreferenceFragment;
 import android.util.Log;
 
 import com.dayzerostudio.slugguide.slugmenu.R;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
 
 public class MySettingsActivity extends PreferenceActivity {
 
     private final static String TAG = MySettingsActivity.class.getSimpleName();
-    private final static String KEY_USERNAME = "username";
-    private final static String KEY_OPTOUT = "GA-TrackingPreference";
 
     @SuppressWarnings("deprecation")
     @Override
@@ -45,38 +41,21 @@ public class MySettingsActivity extends PreferenceActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
-
-    private SharedPreferences.OnSharedPreferenceChangeListener myPrefsListener =
-            new SharedPreferences.OnSharedPreferenceChangeListener() {
-                @SuppressWarnings("deprecation")
-                @Override
-                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                    if (key.equals(KEY_OPTOUT)) {
-                        GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(sharedPreferences.getBoolean(key, false));
-                    }
-                }
-            };
 
     @Override
     protected void onResume() {
         super.onResume();
-        //noinspection ConstantConditions,deprecation
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this.myPrefsListener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //noinspection ConstantConditions,deprecation
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this.myPrefsListener);
     }
 
 }

@@ -22,9 +22,7 @@ import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.BaseMenuF
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.DisplayMenuPagerAdapter;
 import com.dayzerostudio.utils.dialogs.FeedBackDialog;
 import com.dayzerostudio.utils.dialogs.GetInternetDialog;
-import com.dayzerostudio.utils.dialogs.OptOutGADialog;
 import com.dayzerostudio.utils.storage.shrdprfs.MyShrdPrfs;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class DisplayMenuActivity extends ActionBarActivity {
 
@@ -144,10 +142,8 @@ public class DisplayMenuActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
 
         if (MyShrdPrfs.myShrdPrfs.getBoolean("isFirstTimeUser", true)) {
-            OptOutGADialog.newInstance().show(getSupportFragmentManager());
             MyShrdPrfs.saveObject("isFirstTimeUser", false);
         }
     }
@@ -155,7 +151,6 @@ public class DisplayMenuActivity extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
