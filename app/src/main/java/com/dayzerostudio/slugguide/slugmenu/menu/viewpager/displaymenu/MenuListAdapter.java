@@ -167,12 +167,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem> implements Comparato
 
         vh.checkBox.setChecked(myBmf.getSelectedMenuItems().contains(menuObj));
         vh.menuItem.setText(getItem(position).getName());
-        Float rating = menuObj.getRating();
-        if (rating == -1) {
-            vh.textRating.setText("-");
-        } else {
-            vh.textRating.setText(menuObj.getRating() + "");
-        }
+        vh.textRating.setText(menuObj.getRating("-"));
         vh.expRatingBar.setRating(menuObj.getRating());
 
         return convertView;

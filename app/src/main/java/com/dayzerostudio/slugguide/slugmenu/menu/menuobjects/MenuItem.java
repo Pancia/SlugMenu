@@ -27,13 +27,23 @@ public class MenuItem {
         return this.rating;
     }
 
-    public MenuItem setRating(Float rating){
+    public String getRating(String dflt) {
+        if (rating < 0) {
+            return dflt;
+        } else {
+            return String.valueOf(this.rating);
+        }
+    }
+
+    public MenuItem setRating(Float rating) {
         this.rating = rating;
         return this;
     }
 
     @Override
-    public String toString() {return getName()+":"+getRating();}
+    public String toString() {
+        return getName()+":"+getRating();
+    }
 
     @Override
     public boolean equals(Object o) {
