@@ -95,9 +95,9 @@ public class MenuParser {
 
         String title = document.getElementsByClass("menusamptitle").html();//title
 
-        JsonMenuObject json = new JsonMenuObject();
-        json.response.setTitle(title);
-        json.menu.setDh(dh);
+        JsonMenuObject jsonMenuObject = new JsonMenuObject();
+        jsonMenuObject.response.setTitle(title);
+        jsonMenuObject.menu.setDh(dh);
 
         int warning = 0;
         if (!menu.contains("Breakfast"))
@@ -106,26 +106,26 @@ public class MenuParser {
             warning += 2;
         if (!menu.contains("Dinner"))
             warning += 4;
-        json.server.setWarning(warning);
+        jsonMenuObject.server.setWarning(warning);
 
-        Log.i(TAG, json.toString());
+        Log.i(TAG, jsonMenuObject.toString());
 
         if (warning == 7) {
-            json.request.setSuccess(0);
-            json.server.setError(1);
-            json.response.setMessage("Couldn\'t get the menu, the dining hall might be closed for the day.");
-            Log.w(TAG, json.toString());
-            return json;
+            jsonMenuObject.request.setSuccess(0);
+            jsonMenuObject.server.setError(1);
+            jsonMenuObject.response.setMessage("Couldn\'t get the menu, the dining hall might be closed for the day.");
+            Log.w(TAG, jsonMenuObject.toString());
+            return jsonMenuObject;
         }
-        json.request.setSuccess(1);
-        json.server.setError(0);
-        json.response.setMessage("Got the menu!");
+        jsonMenuObject.request.setSuccess(1);
+        jsonMenuObject.server.setError(0);
+        jsonMenuObject.response.setMessage("Got the menu!");
 
-        String meal = null; ArrayList<String> mealsMenu = new ArrayList();
+        String meal = null; ArrayList<String> mealsMenu = new ArrayList<String>();
         for (String str : menu) {
             if (str.equals("Breakfast") || str.equals("Lunch") || str.equals("Dinner")) {
                 if (meal != null) {
-                    json.menu.setMealWith(meal, (ArrayList<String>)mealsMenu.clone());
+                    jsonMenuObject.menu.setMealWith(meal, (ArrayList<String>)mealsMenu.clone());
                     mealsMenu.clear();
                 }
                 meal = str;
@@ -133,9 +133,9 @@ public class MenuParser {
                 mealsMenu.add(str.replace("&amp;", "&"));
             }
         }
-        json.menu.setMealWith(meal, mealsMenu);
-        Log.i(TAG, json.toString());
-        return json;
+        jsonMenuObject.menu.setMealWith(meal, mealsMenu);
+        Log.i(TAG, jsonMenuObject.toString());
+        return jsonMenuObject;
     }
 
 }
