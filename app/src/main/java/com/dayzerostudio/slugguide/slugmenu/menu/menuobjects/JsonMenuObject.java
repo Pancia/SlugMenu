@@ -76,13 +76,19 @@ public class JsonMenuObject {
         public ArrayList<MenuItem> getMeal(int i) {
             switch (i) {
                 case BREAKFAST:
-                    return toMenuItemList(breakfast);
+                    if (hasBreakfast())
+                        return toMenuItemList(breakfast);
                 case LUNCH:
-                    return toMenuItemList(lunch);
+                    if (hasLunch())
+                        return toMenuItemList(lunch);
                 case DINNER:
-                    return toMenuItemList(dinner);
+                    if (hasDinner())
+                        return toMenuItemList(dinner);
                 default:
-                    return null;
+                    return hasBreakfast()?toMenuItemList(breakfast)
+                            :hasLunch()?toMenuItemList(lunch)
+                            :hasDinner()?toMenuItemList(dinner)
+                            :null;
             }
         }
 
