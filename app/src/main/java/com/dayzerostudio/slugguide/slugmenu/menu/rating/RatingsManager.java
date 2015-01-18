@@ -1,6 +1,7 @@
 package com.dayzerostudio.slugguide.slugmenu.menu.rating;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.MenuItem;
@@ -27,6 +28,8 @@ public class RatingsManager {
     private static final String slugMenuElixirRatingServerBaseUrl = "http://169.233.58.235:8080";
     private ElixirRatingService service;
 
+    private String android_id;
+
     public RatingsManager(Context context) {
         this.mydb = new MyRatingsDB(context);
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -34,13 +37,16 @@ public class RatingsManager {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         this.service = restAdapter.create(ElixirRatingService.class);
+        android_id = Settings.Secure.getString(context.getContentResolver(),
+                            Settings.Secure.ANDROID_ID);
     }
 
     public void storeRatingsFor(MenuItem menuObj, float rating) {
         MenuItemRating menuItemRating = new MenuItemRating();
         menuItemRating.rating = rating;
         menuItemRating.status = "ok";
-        service.postRatingForItem(menuObj.getName().replace(" ", "_"), menuItemRating,
+        menuItemRating.user   = android_id;
+        service.postRatingForItem(menuObj.getName().replace(" ", "_").toLowerCase(), menuItemRating,
                 new Callback<MenuItemRating>() {
                     @Override
                     public void success(MenuItemRating menuItemRating, Response response) {
@@ -63,7 +69,7 @@ public class RatingsManager {
     }
 
     public Float getRatingFor(String item) {
-        return service.getRatingForItem(item.replace(" ", "_")).rating;
+        return service.getRatingForItem(item.replace(" ", "_").toLowerCase()).rating;
         //return this.mydb.getRatingFor(item);
     }
 
@@ -81,10 +87,6 @@ public class RatingsManager {
         return myRatingsList;
     }
 
-    /*public List<MenuItem> getAllRatings() {
-        return this.mydb.getAllRatings();
-    }*/
-
     public void closeDB() {
         this.mydb.closeDB();
     }
@@ -92,12 +94,14 @@ public class RatingsManager {
     private class MenuItemRating {
         public Float rating;
         public String status;
+        public String user;
 
         @Override
         public String toString() {
             return "MenuItemRating#{"
                     + "rating: "  + rating.toString()
                     + " status: " + status
+                    + " user: "   + user
                     + "}";
         }
     }

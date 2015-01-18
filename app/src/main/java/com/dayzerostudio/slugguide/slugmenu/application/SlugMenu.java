@@ -20,10 +20,6 @@ public class SlugMenu extends Application {
         MyShrdPrfs.init(this);
         MenuStorage.init(this);
         MyConnectivity.init(this);
-
-        String android_id = Settings.Secure.getString(this.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-        Log.e(TAG + "#android_id", android_id);
     }
 
 }
