@@ -93,7 +93,7 @@ public class MenuParser {
         menu.removeAll(itemsToRemove);
         Log.i(TAG, menu.toString());
 
-        String title = document.getElementsByClass("menusamptitle").html();//title
+        String title = document.getElementsByClass("menusamptitle").html();
 
         JsonMenuObject jsonMenuObject = new JsonMenuObject();
         jsonMenuObject.response.setTitle(title);
@@ -113,10 +113,11 @@ public class MenuParser {
         if (warning == 7) {
             jsonMenuObject.request.setSuccess(0);
             jsonMenuObject.server.setError(1);
-            jsonMenuObject.response.setMessage("Couldn\'t get the menu, the dining hall might be closed for the day.");
+            jsonMenuObject.response.setMessage("Couldn't get the menu, the dining hall might be closed for the day.");
             Log.w(TAG, jsonMenuObject.toString());
             return jsonMenuObject;
         }
+
         jsonMenuObject.request.setSuccess(1);
         jsonMenuObject.server.setError(0);
         jsonMenuObject.response.setMessage("Got the menu!");
@@ -125,7 +126,7 @@ public class MenuParser {
         for (String str : menu) {
             if (str.equals("Breakfast") || str.equals("Lunch") || str.equals("Dinner")) {
                 if (meal != null) {
-                    jsonMenuObject.menu.setMealWith(meal, (ArrayList<String>)mealsMenu.clone());
+                    jsonMenuObject.menu.setMealWith(meal, (ArrayList<String>) mealsMenu.clone());
                     mealsMenu.clear();
                 }
                 meal = str;

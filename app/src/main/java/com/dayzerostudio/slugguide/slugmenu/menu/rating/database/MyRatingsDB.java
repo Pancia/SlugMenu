@@ -10,7 +10,7 @@ public class MyRatingsDB {
     private static String TAG = MyRatingsDB.class.toString();
 
     private static SQLiteDatabase database;
-    private static MyRatingsDatabaseHelper dbHelper; //this being static is key to not locking sqliteDB
+    private static MyRatingsDatabaseHelper dbHelper; //static == not lock sqliteDB
 
     public final static String DB_TABLE ="MyRatings";
 
