@@ -90,7 +90,7 @@ public class RatingsDialog extends DialogFragment {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RatingsManager rm = new RatingsManager(getActivity());
+                        RatingsManager rm = new RatingsManager(getActivity(), ((MenuListAdapter)RatingsDialog.this.myAdapter.getWrappedAdapter()).myBmf.getDh());
                         rm.storeRatingsFor(selectedMenuItems, myRatingBar.getRating());
                         rm.closeDB();
                         ((MenuListAdapter) myAdapter.getWrappedAdapter()).notifyDataSetChanged();

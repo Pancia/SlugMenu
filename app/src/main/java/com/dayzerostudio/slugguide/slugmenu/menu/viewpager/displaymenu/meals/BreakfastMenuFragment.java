@@ -15,31 +15,37 @@ public class BreakfastMenuFragment extends BaseMenuFragment {
 
     private String TAG = BreakfastMenuFragment.class.getSimpleName();
 
-    private String myMenu;
+    private String myDh;
+    public String dh = "breakfast";
 
     public BreakfastMenuFragment() {}
 
     public BreakfastMenuFragment(String menu, int dtdate) {
-        this.myMenu = menu;
-        this.myDtDate = dtdate;
+        myDh = menu;
+        myDtDate = dtdate;
     }
 
     @Override
     public List<MenuItem> getMenuData() {
-        return MenuStorage.getMeal(this.myMenu, "breakfast", this.myDtDate);
+        return MenuStorage.getMeal(myDh, dh, this.myDtDate);
+    }
+
+    @Override
+    public String getDh() {
+        return myDh;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            myMenu = savedInstanceState.getString("MY_MENU");
+            myDh = savedInstanceState.getString("MY_MENU");
         }
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("MY_MENU", myMenu);
+        outState.putString("MY_MENU", myDh);
         super.onSaveInstanceState(outState);
     }
 

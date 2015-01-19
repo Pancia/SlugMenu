@@ -32,7 +32,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem> implements Comparato
     private String TAG = MenuListAdapter.class.getSimpleName();
 
     private Activity myActivity;
-    private BaseMenuFragment myBmf;
+    public BaseMenuFragment myBmf;
 
     public boolean sortAlphabetically = true;//todo change to shrdprfs field
 
@@ -137,7 +137,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem> implements Comparato
         } else {
             vh = (MenuItemViewHolder) convertView.getTag();
             //verify rating, and update if old
-            RatingsManager rm = new RatingsManager(myActivity);
+            RatingsManager rm = new RatingsManager(myActivity, this.myBmf.getDh());
             Float rating = rm.getRatingFor(menuObj).getRating();
             if (!rating.equals(menuObj.getRating())) {
                 menuObj.setRating(rating);
@@ -155,7 +155,7 @@ public class MenuListAdapter extends ArrayAdapter<MenuItem> implements Comparato
             }
 
             private void updateRating(float rating) {
-                RatingsManager rm = new RatingsManager(myActivity);
+                RatingsManager rm = new RatingsManager(myActivity, MenuListAdapter.this.myBmf.getDh());
                 rm.storeRatingsFor(menuObj, rating);
                 menuObj.setRating(rating);
                 rm.closeDB();

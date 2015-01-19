@@ -43,40 +43,13 @@ public class DiningHallItem {
         }
     }
 
-    public float getAvgRating(JsonMenuObject menu) {
-        RatingsManager rm = new RatingsManager(myActivity);
-        float totRating = 0; int size = 0;
-        for (int i = 0; i < 3; i++) {
-            ArrayList<MenuItem> items = menu.menu.getMeal(i);
-            if (items == null)
-                continue;
-            else if (items.isEmpty())
-                continue;
-            List<MenuItem> menuItems = rm.getRatingsFor(items);
-            if (menuItems == null)
-                continue;
-            else if (menuItems.isEmpty())
-                continue;
-
-            for (MenuItem menuItem : menuItems) {
-                float rating = menuItem.getRating();
-                if (rating != -1) {
-                    totRating += rating;
-                    size++;
-                }
-            }
-        }
-        rm.closeDB();
-        return totRating/size;
-    }
-
     public float getAvgMealRating(JsonMenuObject jmo, int meal) {
         ArrayList<MenuItem> items = jmo.menu.getMeal(meal);
         if (items == null)
             return -1;
         else if (items.isEmpty())
             return -2;
-        RatingsManager rm = new RatingsManager(this.myActivity);
+        RatingsManager rm = new RatingsManager(this.myActivity, jmo.menu.getDh().replace("\"", ""));
         List<MenuItem> menuItems = rm.getRatingsFor(items);
         rm.closeDB();
         if (menuItems == null)

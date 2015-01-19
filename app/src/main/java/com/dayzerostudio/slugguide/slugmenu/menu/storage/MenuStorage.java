@@ -61,7 +61,7 @@ public class MenuStorage {
                    :0)
         );
 
-        RatingsManager rm = new RatingsManager(MenuStorage.myContext);
+        RatingsManager rm = new RatingsManager(MenuStorage.myContext, dh);
         for (MenuItem item : listOfMenuItems) {
             item.setRating(rm.getRatingFor(item).getRating());
         }

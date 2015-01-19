@@ -35,6 +35,7 @@ public abstract class BaseMenuFragment extends ListFragment {
     public List<MenuItem> getSelectedMenuItems() {return selectedMenuItems;}
 
     public abstract List<MenuItem> getMenuData();
+    public abstract String getDh();
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public ActionMode.Callback getAMCallback() {
@@ -148,7 +149,7 @@ public abstract class BaseMenuFragment extends ListFragment {
         if (savedInstanceState != null) {
             myDtDate = savedInstanceState.getInt("MY_DT_DATE");
             selectedMenuItems.clear();
-            RatingsManager rm = new RatingsManager(getActivity());
+            RatingsManager rm = new RatingsManager(getActivity(), getDh());
             //noinspection ConstantConditions
             for (String i : savedInstanceState.getStringArrayList("SELECTED_MENU_OBJECTS")) {
                 Float rating = rm.getRatingFor(i);

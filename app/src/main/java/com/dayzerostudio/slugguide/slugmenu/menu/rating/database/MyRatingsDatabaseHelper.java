@@ -13,7 +13,7 @@ public class MyRatingsDatabaseHelper extends SQLiteOpenHelper {
     //change this to implement any changes
     private static final int DATABASE_VERSION = 2;
 
-    private static final String DATABASE_CREATE = "create table "+TABLE_NAME+"( _id text primary key, rating real);";
+    private static final String DATABASE_CREATE = "create table "+TABLE_NAME+"( _id text primary key, rating real, dh text);";
 
     public MyRatingsDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

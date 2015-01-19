@@ -1,6 +1,7 @@
 package com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.meals;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,31 +16,36 @@ public class LunchMenuFragment extends BaseMenuFragment {
 
     private String TAG = LunchMenuFragment.class.getSimpleName();
 
-    private String myMenu;
+    private String myDh;
 
     public LunchMenuFragment() {}
 
-    public LunchMenuFragment(String menu, int dtdate) {
-        this.myMenu = menu;
+    public LunchMenuFragment(String dh, int dtdate) {
+        this.myDh = dh;
         this.myDtDate = dtdate;
     }
 
     @Override
     public List<MenuItem> getMenuData() {
-        return MenuStorage.getMeal(this.myMenu, "lunch", this.myDtDate);
+        return MenuStorage.getMeal(myDh, "lunch", this.myDtDate);
+    }
+
+    @Override
+    public String getDh() {
+        return myDh;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            myMenu = savedInstanceState.getString("MY_MENU");
+            myDh = savedInstanceState.getString("MY_MENU");
         }
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("MY_MENU", myMenu);
+        outState.putString("MY_MENU", myDh);
         super.onSaveInstanceState(outState);
     }
 }

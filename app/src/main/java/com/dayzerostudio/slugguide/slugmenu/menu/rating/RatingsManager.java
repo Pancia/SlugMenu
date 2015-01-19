@@ -28,6 +28,7 @@ import retrofit.http.Path;
 public class RatingsManager {
 
     private static String TAG = RatingsManager.class.getSimpleName();
+    private final String mydh;
     private MyRatingsDB mydb;
 
     private static final String slugMenuElixirRatingServerBaseUrl = "http://169.233.58.235:8080";
@@ -35,12 +36,16 @@ public class RatingsManager {
 
     private String android_id;
 
-    public RatingsManager(Context context) {
-        this.mydb = new MyRatingsDB(context);
+    public RatingsManager(Context context, String dh) {
+        this.mydb = new MyRatingsDB(context, dh);
+        this.mydh = dh;
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(slugMenuElixirRatingServerBaseUrl)
+                .setLogLevel(RestAdapter.LogLevel.HEADERS_AND_ARGS)
                 .build();
         this.service = restAdapter.create(ElixirRatingService.class);
+
         android_id = Settings.Secure.getString(context.getContentResolver(),
                             Settings.Secure.ANDROID_ID);
     }
@@ -50,7 +55,7 @@ public class RatingsManager {
         menuItemRating.rating = rating;
         menuItemRating.status = "ok";
         menuItemRating.user   = android_id;
-        service.postRatingForItem(menuObj.getName().replace(" ", "_").toLowerCase(), menuItemRating,
+        service.postRatingForItem(menuObj.getName().replace(" ", "_").toLowerCase(), this.mydh, menuItemRating,
                 new Callback<MenuItemRating>() {
                     @Override
                     public void success(MenuItemRating menuItemRating, Response response) {
@@ -81,7 +86,7 @@ public class RatingsManager {
         Callable<Float> callable = new Callable<Float>() {
             @Override
             public Float call() {
-                return service.getRatingForItem(item.replace(" ", "_").toLowerCase()).rating;
+                return service.getRatingForItem(item.replace(" ", "_").toLowerCase(), RatingsManager.this.mydh).rating;
             }
         };
         Future<Float> future = executor.submit(callable);
@@ -131,12 +136,13 @@ public class RatingsManager {
     }
 
     interface ElixirRatingService {
-        @GET("/ratings/nine/{item}")
-        MenuItemRating getRatingForItem(@Path("item") String item);
+        @GET("/ratings/{dh}/{item}")
+        MenuItemRating getRatingForItem(@Path("item") String item, @Path("dh") String dh);
 
         @Headers("Content-type: application/json")
-        @POST("/ratings/nine/{item}")
-        void postRatingForItem(@Path("item") String item, @Body MenuItemRating rating,
+        @POST("/ratings/{dh}/{item}")
+        void postRatingForItem(@Path("item") String item, @Path("dh") String dh,
+                               @Body MenuItemRating rating,
                                Callback<MenuItemRating> ignore);
     }
 

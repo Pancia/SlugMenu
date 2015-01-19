@@ -39,8 +39,8 @@ public class AsyncHttpRequestManager extends AsyncTask<String, String, String> {
         this.TAG = "AHRM#getMenu";
     }
 
-    public AsyncHttpRequestManager setCallback(MyFutureTask listnener) {
-        this.myFutureTask = listnener;
+    public AsyncHttpRequestManager setCallback(MyFutureTask listener) {
+        this.myFutureTask = listener;
         this.hasCallback = true;
         return this;
     }

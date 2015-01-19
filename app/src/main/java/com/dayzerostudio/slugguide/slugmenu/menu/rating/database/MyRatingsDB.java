@@ -16,13 +16,18 @@ public class MyRatingsDB {
 
     public final static String DB_ID ="_id";
     public final static String DB_RATING ="rating";
+    public final static String DB_DH = "dh";
+    private String mydh = null;
 
     public MyRatingsDB() {}
 
-    public MyRatingsDB(Context context) {
-        if (dbHelper == null) {dbHelper = new MyRatingsDatabaseHelper(context);}
+    public MyRatingsDB(Context context, String dh) {
+        this.mydh = dh;
+        if (dbHelper == null) {
+            dbHelper = new MyRatingsDatabaseHelper(context);
+        }
         SQLiteDatabase sqlDB;
-        try{
+        try {
             sqlDB = dbHelper.getWritableDatabase();
             database = sqlDB;
         } catch (NullPointerException ex) {
@@ -34,12 +39,13 @@ public class MyRatingsDB {
         ContentValues values = new ContentValues();
         values.put(DB_RATING, rating);
         values.put(DB_ID, id);
+        values.put(DB_DH, mydh);
         return database.insertWithOnConflict(DB_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     public Float getRatingFor(String id) {
-        Cursor c = database.query(DB_TABLE, new String[] {DB_ID, DB_RATING},
-                DB_ID + " = ?", new String[]{id},
+        Cursor c = database.query(DB_TABLE, new String[] {DB_ID, DB_RATING, DB_DH},
+                DB_ID + " = ? AND " + DB_DH + " = ?", new String[]{id, mydh},
                 null, null, null);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
@@ -50,33 +56,6 @@ public class MyRatingsDB {
         c.close();
         return ret;
     }
-
-    /*
-    public List<MenuItem> getAllRatings() {
-        Cursor c = database.query(true, DB_TABLE, new String[] {DB_ID, DB_RATING},
-                null, null, null, null, null, null);
-
-        if (c != null && c.getColumnCount() > 2) {
-            c.moveToFirst();
-        } else {
-            Log.e(TAG+"#getAllRatings", "Cursor was null!!!");
-            return null;
-        }
-        List<MenuItem> menuObjs = new ArrayList<MenuItem>();
-        for (int i = 0; i < c.getCount(); c.moveToNext()) {
-            menuObjs.add(new MenuItem(c.getString(0), c.getFloat(1)));
-        }
-        c.close();
-        return menuObjs;
-    }
-
-    public int getRatingsCount() {
-        return getAllRatings().size();
-    }
-
-    public void deleteRating(String id) {
-        database.delete(DB_TABLE, DB_ID + " = ?", new String[]{id});
-    }*/
 
     public void closeDB() {
         database.close();
