@@ -9,6 +9,11 @@ import com.dayzerostudio.slugguide.slugmenu.menu.rating.database.MyRatingsDB;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -34,7 +39,6 @@ public class RatingsManager {
         this.mydb = new MyRatingsDB(context);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(slugMenuElixirRatingServerBaseUrl)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         this.service = restAdapter.create(ElixirRatingService.class);
         android_id = Settings.Secure.getString(context.getContentResolver(),
@@ -68,13 +72,33 @@ public class RatingsManager {
         }
     }
 
-    public Float getRatingFor(String item) {
-        return service.getRatingForItem(item.replace(" ", "_").toLowerCase()).rating;
-        //return this.mydb.getRatingFor(item);
+    public Float getRatingFor(final String item) {
+        Float cachedRating = this.mydb.getRatingFor(item);
+        if (cachedRating >= 0) {
+            return cachedRating;
+        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Callable<Float> callable = new Callable<Float>() {
+            @Override
+            public Float call() {
+                return service.getRatingForItem(item.replace(" ", "_").toLowerCase()).rating;
+            }
+        };
+        Future<Float> future = executor.submit(callable);
+        executor.shutdown();
+
+        try {
+            return future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return -1f;
     }
 
     public MenuItem getRatingFor(MenuItem menuObj) {
-        return new MenuItem( menuObj.getName(), this.mydb.getRatingFor(menuObj.getName()) );
+        return new MenuItem( menuObj.getName(), this.getRatingFor(menuObj.getName()) );
     }
 
     public List<MenuItem> getRatingsFor(List<MenuItem> selectedMenuItems) {
