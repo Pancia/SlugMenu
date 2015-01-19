@@ -42,7 +42,7 @@ public class RatingsManager {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(slugMenuElixirRatingServerBaseUrl)
-                .setLogLevel(RestAdapter.LogLevel.HEADERS_AND_ARGS)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
         this.service = restAdapter.create(ElixirRatingService.class);
 

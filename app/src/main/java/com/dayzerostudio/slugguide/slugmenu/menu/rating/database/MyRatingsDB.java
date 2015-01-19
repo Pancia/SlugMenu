@@ -17,6 +17,9 @@ public class MyRatingsDB {
     public final static String DB_ID ="_id";
     public final static String DB_RATING ="rating";
     public final static String DB_DH = "dh";
+
+    public final static int DB_RATING_COL = 1;
+
     private String mydh = null;
 
     public MyRatingsDB() {}
@@ -52,7 +55,7 @@ public class MyRatingsDB {
         } else {
             return (float) -1;
         }
-        Float ret = c.getFloat(1);
+        Float ret = c.getFloat(DB_RATING_COL);
         c.close();
         return ret;
     }
