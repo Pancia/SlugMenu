@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -206,6 +207,10 @@ public class DisplayMenuActivity extends ActionBarActivity {
                         .findFragmentById(R.id.displaymenu_masterfragment))
                         .getListView().getAdapter()).notifyDataSetChanged();
                 return true;
+            case R.id.action_sort:
+                //todo: should not need to propagate manually...
+                getSupportFragmentManager()
+                        .findFragmentById(R.id.displaymenu_detailfragment).onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }

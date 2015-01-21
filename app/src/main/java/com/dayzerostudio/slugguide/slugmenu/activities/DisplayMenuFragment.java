@@ -57,7 +57,7 @@ public class DisplayMenuFragment extends Fragment {
         if (menu.isEmpty()) {
             //todo: either make background have message,
             //todo: or put "it's empty" item into some adapter
-            Log.w(TAG, "meal.isEmpty()!");
+            Log.w(TAG, "menu.isEmpty()!");
             myViewPager.setAdapter(null);
         } else {
             myViewPager.setOffscreenPageLimit(menu.getOffScreenPageLimit());
@@ -83,7 +83,7 @@ public class DisplayMenuFragment extends Fragment {
             case R.id.action_sort:
                 //todo should actually modify all fragments, and future fragments
                 // #see menulistadapter:sortAlphabetically
-                Log.d(TAG, "Swapping sorting method.");
+                Log.e(TAG, "Swapping sorting method.");
                 ((DisplayMenuPagerAdapter)myViewPager.getAdapter())
                         .fragments.get(myViewPager.getCurrentItem())
                         .getMenuListAdapter().swapSortingMethod();
