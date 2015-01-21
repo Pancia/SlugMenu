@@ -209,8 +209,8 @@ public class DisplayMenuActivity extends ActionBarActivity {
                 return true;
             case R.id.action_sort:
                 //todo: should not need to propagate manually...
-                getSupportFragmentManager()
-                        .findFragmentById(R.id.displaymenu_detailfragment).onOptionsItemSelected(item);
+                return getSupportFragmentManager()
+                            .findFragmentById(R.id.displaymenu_detailfragment).onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
