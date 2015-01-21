@@ -70,12 +70,6 @@ public class Menu {
         }
     }
 
-    public void clearAllMeals() {
-        hasBreakfast = false;
-        hasLunch = false;
-        hasDinner = false;
-    }
-
     public int getOffScreenPageLimit() {
         if (getNumOfMeals() > 2) return 2;
         else return 1;
@@ -107,25 +101,6 @@ public class Menu {
         }
         return intTab;
     }
-
-//    //maybe just return getClosestIntTab();?
-//    public int getClosestMeal() {
-//        int closest = getClosestIntTab();
-//        if (closest == 0) {
-//            if (hasBreakfast) return BREAKFAST;
-//            else if (hasLunch) return LUNCH;
-//            else return DINNER;
-//        } else if (closest == 1) {
-//            if (hasBreakfast) {
-//                if (hasLunch) return LUNCH;
-//                else return DINNER;
-//            } else {
-//                return DINNER;
-//            }
-//        } else {
-//            return DINNER;
-//        }
-//    }
 
     public static int getDhName(String dh) {
         if (dh.equals("nine"))
