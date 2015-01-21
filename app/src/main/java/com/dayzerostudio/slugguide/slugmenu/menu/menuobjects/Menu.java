@@ -4,7 +4,7 @@ import com.dayzerostudio.slugguide.slugmenu.R;
 
 import java.util.Calendar;
 
-public class Meal {
+public class Menu {
 
     public final static int MENU_ALL_MEALS         = 0;
     public final static int MENU_NO_BREAKFAST      = 1;
@@ -24,9 +24,9 @@ public class Meal {
     public final static int LUNCH = 1;
     public final static int DINNER = 2;
 
-    public Meal() {}
+    public Menu() {}
 
-    public Meal(String dh) {
+    public Menu(String dh) {
         this.myDh = dh;
     }
 

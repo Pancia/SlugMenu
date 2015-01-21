@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,7 @@ import android.webkit.WebView;
 import com.dayzerostudio.slugguide.slugmenu.MySlidingPaneLayout;
 import com.dayzerostudio.slugguide.slugmenu.R;
 import com.dayzerostudio.slugguide.slugmenu.application.SlugMenu;
-import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Meal;
+import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Menu;
 import com.dayzerostudio.slugguide.slugmenu.menu.rating.notifs.RatingsDialog;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.BaseMenuFragment;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.DisplayMenuPagerAdapter;
@@ -154,7 +153,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
         if (SlugMenu.isNewAPI)
             inflater.inflate(R.menu.activity_dininghalls, menu);
@@ -218,7 +217,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                     .replace(R.id.displaymenu_detailfragment,
                             new DisplayMenuFragment(dhName), "DisplayMenuFragment")
                     .commit();
-            myActionBar.setSubtitle(Meal.getDhName(dhName));
+            myActionBar.setSubtitle(Menu.getDhName(dhName));
             myPaneLayout.closePane();
         }
     }

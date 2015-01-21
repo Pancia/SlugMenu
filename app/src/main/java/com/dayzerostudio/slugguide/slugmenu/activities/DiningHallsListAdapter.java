@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.dayzerostudio.slugguide.slugmenu.R;
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.DiningHallItem;
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.JsonMenuObject;
-import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Meal;
+import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Menu;
 import com.dayzerostudio.slugguide.slugmenu.menu.storage.MenuStorage;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.ViewHolder;
 import com.dayzerostudio.slugguide.slugmenu.server.AsyncHttpRequestManager;
@@ -55,7 +55,7 @@ public class DiningHallsListAdapter extends ArrayAdapter<DiningHallItem> {
         final String dhName = dhItem.getName()
                 .substring(0, dhItem.getName().indexOf("and") - 1).toLowerCase();
         final DiningHallViewHolder vh;
-        final Meal meal = new Meal(dhName);
+        final Menu menu = new Menu(dhName);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) myActivity
@@ -89,7 +89,7 @@ public class DiningHallsListAdapter extends ArrayAdapter<DiningHallItem> {
                         @Override
                         public void onTaskCompleted(final JsonMenuObject jmo, Boolean success) {
                             if (success) {
-                                Float avgRating = dhItem.getAvgMealRating(jmo, meal.getClosestMeal());
+                                Float avgRating = dhItem.getAvgMealRating(jmo, menu.getClosestMeal());
                                 vh.avg_rating.setText( "Avg: " +
                                         (avgRating >= 0
                                                 ? Float.toString(avgRating).substring(0, 3)

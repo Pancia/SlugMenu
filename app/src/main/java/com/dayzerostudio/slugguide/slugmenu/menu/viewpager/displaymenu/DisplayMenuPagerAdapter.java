@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Meal;
+import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Menu;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.meals.BreakfastMenuFragment;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.meals.DinnerMenuFragment;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.meals.LunchMenuFragment;
@@ -18,18 +18,18 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
 
      public SparseArray<BaseMenuFragment> fragments = new SparseArray<BaseMenuFragment>();
 
-     private Meal meal;
+     private Menu menu;
 
-     public DisplayMenuPagerAdapter(FragmentManager fm, Meal meal, int dtdate) {
+     public DisplayMenuPagerAdapter(FragmentManager fm, Menu menu, int dtdate) {
          super(fm);
-         this.meal = meal;
+         this.menu = menu;
          this.dtdate  = dtdate;
      }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (meal.getOptCode()) {
-            case Meal.MENU_ALL_MEALS:
+        switch (menu.getOptCode()) {
+            case Menu.MENU_ALL_MEALS:
                 switch (position) {
                     case 0:
                         return "Breakfast";
@@ -40,7 +40,7 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
                     default:
                         return null;
                 }
-            case Meal.MENU_NO_BREAKFAST:
+            case Menu.MENU_NO_BREAKFAST:
                 switch (position) {
                     case 0:
                         return "Lunch";
@@ -49,7 +49,7 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
                     default:
                         return null;
                 }
-            case Meal.MENU_NO_LUNCH:
+            case Menu.MENU_NO_LUNCH:
                 switch (position) {
                     case 0:
                         return "Breakfast";
@@ -58,7 +58,7 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
                     default:
                         return null;
                 }
-            case Meal.MENU_NO_DINNER:
+            case Menu.MENU_NO_DINNER:
                 switch (position) {
                     case 0:
                         return "Breakfast";
@@ -67,13 +67,13 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
                     default:
                         return null;
                 }
-            case Meal.MENU_ONLY_DINNER:
+            case Menu.MENU_ONLY_DINNER:
                 return "Dinner";
-            case Meal.MENU_ONLY_LUNCH:
+            case Menu.MENU_ONLY_LUNCH:
                 return "Lunch";
-            case Meal.MENU_ONLY_BREAKFAST:
+            case Menu.MENU_ONLY_BREAKFAST:
                 return "Breakfast";
-            case Meal.MENU_NO_MEALS:
+            case Menu.MENU_NO_MEALS:
                 return null;
             default:
                 return null;
@@ -107,52 +107,52 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
 
      @Override
      public Fragment getItem(int position) {
-         switch (meal.getOptCode()) {
-             case Meal.MENU_ALL_MEALS:
+         switch (menu.getOptCode()) {
+             case Menu.MENU_ALL_MEALS:
                  switch (position) {
                      case 0:
-                         return new BreakfastMenuFragment(this.meal.myDh, this.dtdate);
+                         return new BreakfastMenuFragment(this.menu.myDh, this.dtdate);
                      case 1:
-                         return new LunchMenuFragment(this.meal.myDh, this.dtdate);
+                         return new LunchMenuFragment(this.menu.myDh, this.dtdate);
                      case 2:
-                         return new DinnerMenuFragment(this.meal.myDh, this.dtdate);
+                         return new DinnerMenuFragment(this.menu.myDh, this.dtdate);
                      default:
                          return null;
                  }
-             case Meal.MENU_NO_BREAKFAST:
+             case Menu.MENU_NO_BREAKFAST:
                  switch (position) {
                      case 0:
-                         return new LunchMenuFragment(this.meal.myDh, this.dtdate);
+                         return new LunchMenuFragment(this.menu.myDh, this.dtdate);
                      case 1:
-                         return new DinnerMenuFragment(this.meal.myDh, this.dtdate);
+                         return new DinnerMenuFragment(this.menu.myDh, this.dtdate);
                      default:
                          return null;
                  }
-             case Meal.MENU_NO_LUNCH:
+             case Menu.MENU_NO_LUNCH:
                  switch (position) {
                      case 0:
-                         return new BreakfastMenuFragment(this.meal.myDh, this.dtdate);
+                         return new BreakfastMenuFragment(this.menu.myDh, this.dtdate);
                      case 1:
-                         return new DinnerMenuFragment(this.meal.myDh, this.dtdate);
+                         return new DinnerMenuFragment(this.menu.myDh, this.dtdate);
                      default:
                          return null;
                  }
-             case Meal.MENU_NO_DINNER:
+             case Menu.MENU_NO_DINNER:
                  switch (position) {
                      case 0:
-                         return new BreakfastMenuFragment(this.meal.myDh, this.dtdate);
+                         return new BreakfastMenuFragment(this.menu.myDh, this.dtdate);
                      case 1:
-                         return new LunchMenuFragment(this.meal.myDh, this.dtdate);
+                         return new LunchMenuFragment(this.menu.myDh, this.dtdate);
                      default:
                          return null;
                  }
-             case Meal.MENU_ONLY_DINNER:
-                 return new DinnerMenuFragment(this.meal.myDh, this.dtdate);
-             case Meal.MENU_ONLY_LUNCH:
-                 return new LunchMenuFragment(this.meal.myDh, this.dtdate);
-             case Meal.MENU_ONLY_BREAKFAST:
-                 return new BreakfastMenuFragment(this.meal.myDh, this.dtdate);
-             case Meal.MENU_NO_MEALS:
+             case Menu.MENU_ONLY_DINNER:
+                 return new DinnerMenuFragment(this.menu.myDh, this.dtdate);
+             case Menu.MENU_ONLY_LUNCH:
+                 return new LunchMenuFragment(this.menu.myDh, this.dtdate);
+             case Menu.MENU_ONLY_BREAKFAST:
+                 return new BreakfastMenuFragment(this.menu.myDh, this.dtdate);
+             case Menu.MENU_NO_MEALS:
                  return null;
              default:
                  return null;
@@ -161,7 +161,7 @@ public class DisplayMenuPagerAdapter extends FragmentStatePagerAdapter {
 
      @Override
      public int getCount() {
-         return this.meal.getNumOfMeals();
+         return this.menu.getNumOfMeals();
      }
 
  }

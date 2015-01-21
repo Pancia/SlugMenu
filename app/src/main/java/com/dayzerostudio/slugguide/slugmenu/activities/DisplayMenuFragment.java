@@ -5,14 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dayzerostudio.slugguide.slugmenu.R;
-import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Meal;
+import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Menu;
 import com.dayzerostudio.slugguide.slugmenu.menu.storage.MenuStorage;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.DisplayMenuPagerAdapter;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -44,37 +43,37 @@ public class DisplayMenuFragment extends Fragment {
         if (dhName == null) {
             return;
         }
-        final Meal meal = new Meal(dhName);
+        final Menu menu = new Menu(dhName);
         if (MenuStorage.hasMeal(dhName, "breakfast", 0)) {
-            meal.putMeal(Meal.BREAKFAST);
+            menu.putMeal(Menu.BREAKFAST);
         }
         if (MenuStorage.hasMeal(dhName, "lunch", 0)) {
-            meal.putMeal(Meal.LUNCH);
+            menu.putMeal(Menu.LUNCH);
         }
         if (MenuStorage.hasMeal(dhName, "dinner", 0)) {
-            meal.putMeal(Meal.DINNER);
+            menu.putMeal(Menu.DINNER);
         }
 
-        if (meal.isEmpty()) {
+        if (menu.isEmpty()) {
             //todo: either make background have message,
             //todo: or put "it's empty" item into some adapter
             Log.w(TAG, "meal.isEmpty()!");
             myViewPager.setAdapter(null);
         } else {
-            myViewPager.setOffscreenPageLimit(meal.getOffScreenPageLimit());
+            myViewPager.setOffscreenPageLimit(menu.getOffScreenPageLimit());
             DisplayMenuPagerAdapter vpa =
                     new DisplayMenuPagerAdapter(
-                            getActivity().getSupportFragmentManager(), meal, 0
+                            getActivity().getSupportFragmentManager(), menu, 0
                     );
             myViewPager.setAdapter(vpa);
             TitlePageIndicator titleIndicator = (TitlePageIndicator) v.findViewById(R.id.displaymenu_fragment_titles);
             titleIndicator.setViewPager(myViewPager);
-            titleIndicator.setCurrentItem(meal.getClosestMeal());
+            titleIndicator.setCurrentItem(menu.getClosestMeal());
         }
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(android.view.Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
