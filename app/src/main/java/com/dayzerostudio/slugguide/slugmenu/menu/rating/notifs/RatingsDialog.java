@@ -88,10 +88,6 @@ public class RatingsDialog extends DialogFragment {
                         ViewPager viewPager = ((DisplayMenuActivity) getActivity()).getDisplayMenuViewPager();
                         BaseMenuFragment bmf = ((DisplayMenuPagerAdapter) viewPager.getAdapter()).fragments.get(viewPager.getCurrentItem());
                         MenuListAdapter adapter = (MenuListAdapter) ((MySlideExpandableListAdapter) bmf.getListAdapter()).getWrappedAdapter();
-                      //TODO
-                      //try(RatingsManager rm = new RatingsManager(getActivity(), adapter.myBmf.getDh())) {
-                      //    rm.storeRatingsFor(selectedMenuItems, myRatingBar.getRating());
-                      //}
                         RatingsManager rm = new RatingsManager(getActivity(), adapter.myBmf.getDh());
                         rm.storeRatingsFor(selectedMenuItems, myRatingBar.getRating());
                         rm.closeDB();
