@@ -25,16 +25,11 @@ public class MyWebViewFragment extends Fragment {
 
     public MyWebViewFragment() {}
 
-    public MyWebViewFragment(String subtitle) {
-        this.dhName = subtitle;
+    @Override
+    public void setArguments(Bundle args) {
+        dhName = args.getString("DH_NAME");
+        super.setArguments(args);
     }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (savedInstanceState != null)
-//            dhName = getDhName(savedInstanceState.getString("DH_NAME"));
-//    }
 
     public String getDhName() {
         String name = dhName;

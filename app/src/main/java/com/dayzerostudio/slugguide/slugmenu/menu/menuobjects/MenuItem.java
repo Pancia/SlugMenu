@@ -1,6 +1,9 @@
 package com.dayzerostudio.slugguide.slugmenu.menu.menuobjects;
 
-public class MenuItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class MenuItem implements Parcelable {
 
     private String name = "";
     private Float rating = (float) -1;
@@ -52,4 +55,24 @@ public class MenuItem {
         MenuItem obj = (MenuItem) o;
         return this.getName().equals(obj.getName()) && this.getRating().equals(obj.getRating());
     }
+
+    // PARCELABLE
+
+    public MenuItem(Parcel in) {
+        String[] data = new String [2];
+        in.readStringArray(data);
+        this.name = data[0];
+        this.rating = Float.parseFloat(data[1]);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeStringArray(new String[] {this.name, this.rating.toString()});
+    }
+
 }

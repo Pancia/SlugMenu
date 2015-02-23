@@ -47,7 +47,7 @@ public abstract class BaseMenuFragment extends ListFragment {
             }
 
             private void setRatings() {
-                new RatingsDialog(getListView().getAdapter(), selectedMenuItems)
+                new RatingsDialog().init(getListView().getAdapter(), selectedMenuItems)
                         .show(getFragmentManager(), TAG);
             }
 

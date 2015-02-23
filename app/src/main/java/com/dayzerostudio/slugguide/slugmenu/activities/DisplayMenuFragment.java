@@ -25,8 +25,10 @@ public class DisplayMenuFragment extends Fragment {
 
     public DisplayMenuFragment() {}
 
-    public DisplayMenuFragment(String dhName) {
-        this.dhName = dhName;
+    @Override
+    public void setArguments(Bundle args) {
+        dhName = args.getString("DH_NAME");
+        super.setArguments(args);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                 .findFragmentById(R.id.displaymenu_masterfragment)).getListView().getAdapter());
     }
 
-    private ViewPager getDisplayMenuViewPager() {
+    public ViewPager getDisplayMenuViewPager() {
         if (getSupportFragmentManager()
                 .findFragmentById(R.id.displaymenu_detailfragment).getTag()
                 .equals("DisplayMenuFragment")) {
@@ -173,7 +173,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                     BaseMenuFragment bmf =
                             ((DisplayMenuPagerAdapter) getDisplayMenuViewPager().getAdapter())
                                     .fragments.get(getDisplayMenuViewPager().getCurrentItem());
-                    new RatingsDialog(bmf.getListAdapter(), bmf.getSelectedMenuItems())
+                    new RatingsDialog().init(bmf.getListAdapter(), bmf.getSelectedMenuItems())
                             .show(getSupportFragmentManager());
                 }
             }
@@ -188,9 +188,14 @@ public class DisplayMenuActivity extends ActionBarActivity {
                 if (!getSupportFragmentManager()
                         .findFragmentById(R.id.displaymenu_detailfragment).getTag()
                         .equals("MyWebViewFragment")) {
+                    String dhName = myActionBar.getSubtitle().toString();
+                    MyWebViewFragment webFragment = new MyWebViewFragment();
+                    Bundle args = new Bundle();
+                    args.putString("DH_NAME", dhName);
+                    webFragment.setArguments(args);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.displaymenu_detailfragment,
-                                    new MyWebViewFragment(myActionBar.getSubtitle().toString()),
+                                    webFragment,
                                     "MyWebViewFragment")
                             .commit();
                 }
@@ -207,10 +212,6 @@ public class DisplayMenuActivity extends ActionBarActivity {
                         .findFragmentById(R.id.displaymenu_masterfragment))
                         .getListView().getAdapter()).notifyDataSetChanged();
                 return true;
-           // case R.id.action_sort:
-            //    //todo: should not need to propagate manually...
-             //   return getSupportFragmentManager()
-              //              .findFragmentById(R.id.displaymenu_detailfragment).onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -218,9 +219,13 @@ public class DisplayMenuActivity extends ActionBarActivity {
 
     public void onDisplayMenu(String dhName) {
         if (dhName != null) {
+            DisplayMenuFragment displayMenuFragment = new DisplayMenuFragment();
+            Bundle args = new Bundle();
+            args.putString("DH_NAME", dhName);
+            displayMenuFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.displaymenu_detailfragment,
-                            new DisplayMenuFragment(dhName), "DisplayMenuFragment")
+                            displayMenuFragment, "DisplayMenuFragment")
                     .commit();
             myActionBar.setSubtitle(Menu.getDhName(dhName));
             myPaneLayout.closePane();
