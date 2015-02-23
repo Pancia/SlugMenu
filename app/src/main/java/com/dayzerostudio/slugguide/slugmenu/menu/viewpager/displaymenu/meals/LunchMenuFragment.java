@@ -20,9 +20,11 @@ public class LunchMenuFragment extends BaseMenuFragment {
 
     public LunchMenuFragment() {}
 
-    public LunchMenuFragment(String dh, int dtdate) {
-        this.myDh = dh;
-        this.myDtDate = dtdate;
+    @Override
+    public void setArguments(Bundle args) {
+        myDh = args.getString("dh");
+        myDtDate = args.getInt("dtdate");
+        super.setArguments(args);
     }
 
     @Override

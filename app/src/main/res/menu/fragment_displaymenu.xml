@@ -3,7 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:slugmenu="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_sort"
-        android:title="SORT"
+        android:title="Sort By Rating"
         android:icon="@drawable/ic_action_sort_by_size"
         slugmenu:showAsAction="always"
         android:orderInCategory="5"/>

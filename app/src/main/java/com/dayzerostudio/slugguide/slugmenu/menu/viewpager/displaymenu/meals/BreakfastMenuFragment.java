@@ -18,11 +18,13 @@ public class BreakfastMenuFragment extends BaseMenuFragment {
     private String myDh;
     public String dh = "breakfast";
 
-    public BreakfastMenuFragment() {}
+    public BreakfastMenuFragment () {}
 
-    public BreakfastMenuFragment(String menu, int dtdate) {
-        myDh = menu;
-        myDtDate = dtdate;
+    @Override
+    public void setArguments(Bundle args) {
+        myDh = args.getString("dh");
+        myDtDate = args.getInt("dtdate");
+        super.setArguments(args);
     }
 
     @Override
