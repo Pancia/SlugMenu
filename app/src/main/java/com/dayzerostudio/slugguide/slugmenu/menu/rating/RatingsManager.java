@@ -35,6 +35,8 @@ public class RatingsManager {
     private ElixirRatingService service;
 
     private String android_id;
+    private static List<MenuItem> lastStoredItems = new ArrayList<MenuItem>();
+    private static MenuItem lastStoredItem = new MenuItem("foo", 0.f);
 
     public RatingsManager(Context context, String dh) {
         this.mydb = new MyRatingsDB(context, dh);
@@ -51,6 +53,8 @@ public class RatingsManager {
     }
 
     public void storeRatingsFor(MenuItem menuObj, float rating) {
+        lastStoredItem.setName(menuObj.getName());
+        Log.e("LASTSTOREDITEM", lastStoredItem.toString());
         MenuItemRating menuItemRating = new MenuItemRating();
         menuItemRating.rating = rating;
         menuItemRating.status = "ok";
@@ -72,16 +76,20 @@ public class RatingsManager {
     }
 
     public void storeRatingsFor(List<MenuItem> selectedMenuItems, float rating) {
+        lastStoredItems = selectedMenuItems;
         for (MenuItem item : selectedMenuItems) {
             storeRatingsFor(item, rating);
         }
     }
 
     public Float getRatingFor(final String item) {
-        Float cachedRating = this.mydb.getRatingFor(item);
-        if (cachedRating >= 0) {
+        Log.i(TAG, "lastStoredItem("+lastStoredItem.getName()+")");
+        if (!lastStoredItem.getName().equals(item) || !lastStoredItems.contains(new MenuItem(item))) {
+            Float cachedRating = this.mydb.getRatingFor(item);
+            Log.w(TAG, "cachedRating("+Float.toString(cachedRating)+")");
             return cachedRating;
         }
+        Log.e(TAG, "getRatingFor("+item+")");
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Callable<Float> callable = new Callable<Float>() {
             @Override

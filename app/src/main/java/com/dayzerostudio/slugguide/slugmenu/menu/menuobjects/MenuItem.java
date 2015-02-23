@@ -2,9 +2,11 @@ package com.dayzerostudio.slugguide.slugmenu.menu.menuobjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class MenuItem implements Parcelable {
 
+    private static final String TAG = MenuItem.class.getSimpleName();
     private String name = "";
     private Float rating = (float) -1;
 
@@ -50,10 +52,11 @@ public class MenuItem implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
+        Log.e(TAG, "menuItem equals");
         if (!(o instanceof MenuItem))
             throw new IllegalArgumentException("Passed object "+o.toString()+" was not a MenuItem");
         MenuItem obj = (MenuItem) o;
-        return this.getName().equals(obj.getName()) && this.getRating().equals(obj.getRating());
+        return this.getName().equals(obj.getName());
     }
 
     // PARCELABLE
