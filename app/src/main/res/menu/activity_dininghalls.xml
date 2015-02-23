@@ -1,19 +1,15 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_sort"
-        android:title="SORT"
-        android:orderInCategory="5"/>
-    <item android:id="@+id/action_webview"
-        android:title="Hours &amp; Events"
-        android:orderInCategory="50"/>
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:slugmenu="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_feedback"
         android:title="Feedback"
         android:orderInCategory="99"
         android:icon="@drawable/feedback"
-        android:showAsAction="never"/>
+        slugmenu:showAsAction="never"/>
     <item android:id="@+id/action_settings"
         android:title="@string/dzs_sm_action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"/>
+        slugmenu:showAsAction="never"/>
     <item android:id="@+id/action_reset"
         android:title="Reset ShrdPrfs"
         android:orderInCategory="999"/>

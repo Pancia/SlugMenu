@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dayzerostudio.slugguide.slugmenu.R;
+import com.dayzerostudio.slugguide.slugmenu.application.SlugMenu;
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.Menu;
 import com.dayzerostudio.slugguide.slugmenu.menu.storage.MenuStorage;
 import com.dayzerostudio.slugguide.slugmenu.menu.viewpager.displaymenu.DisplayMenuPagerAdapter;
@@ -37,6 +38,14 @@ public class DisplayMenuFragment extends Fragment {
             dhName = savedInstanceState.getString("DH_NAME");
         displayMenu(v, dhName);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (dhName != null) {
+            setHasOptionsMenu(true);
+        }
     }
 
     private void displayMenu(View v, String dhName) {
@@ -74,6 +83,7 @@ public class DisplayMenuFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(android.view.Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_displaymenu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
