@@ -31,7 +31,7 @@ public class RatingsManager {
     private final String mydh;
     private MyRatingsDB mydb;
 
-    private static final String slugMenuElixirRatingServerBaseUrl = "http://169.233.58.235:8080";
+    private static final String slugMenuElixirRatingServerBaseUrl = "https://hidden-mesa-8412.herokuapp.com";
     private ElixirRatingService service;
 
     private String android_id;
