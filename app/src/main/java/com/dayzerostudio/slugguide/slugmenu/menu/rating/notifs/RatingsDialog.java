@@ -39,7 +39,6 @@ public class RatingsDialog extends DialogFragment {
 
     private RatingBar myRatingBar;
 
-    private MySlideExpandableListAdapter myAdapter;
     private List<MenuItem> selectedMenuItems = new ArrayList<MenuItem>();
 
     public RatingsDialog() {} //is actually used on rotation
@@ -48,7 +47,6 @@ public class RatingsDialog extends DialogFragment {
         Log.d(TAG, adapter.toString());
         Log.d(TAG, objs.toString());
         this.selectedMenuItems.addAll(objs);
-        this.myAdapter = (MySlideExpandableListAdapter) adapter;
         return this;
     }
 
@@ -65,7 +63,6 @@ public class RatingsDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        //setRetainInstance(true); //works, but doesnt save state, rather closes dialog... could work
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view = getActivity().getLayoutInflater().inflate(R.layout.displaymenu_dialog_fragment, null);
         if (view != null) {
@@ -74,30 +71,13 @@ public class RatingsDialog extends DialogFragment {
 
         if (savedInstanceState != null) {
             super.onViewStateRestored(savedInstanceState);
-            Log.d(TAG, savedInstanceState.toString());
-            Log.d(TAG, ((Boolean)savedInstanceState.containsKey(TAG+"#rating")).toString());
+            Log.d(TAG+"bundle", savedInstanceState.toString());
             if (savedInstanceState.containsKey(TAG+"#rating")) {
-                myRatingBar.setRating(savedInstanceState.getFloat(TAG + "#rating"));
+                myRatingBar.setRating(savedInstanceState.getFloat(TAG+"#rating"));
             }
-            if (savedInstanceState.containsKey(TAG+"#selectedMenuItems")) {
-                List<MenuItem> list = new ArrayList<MenuItem>();
-
-                JSONObject json = new JSONObject();
-                try {
-                    json = new JSONObject(MyShrdPrfs.myShrdPrfs.getString(TAG+"#selectedMenuItems", ""));
-                } catch (JSONException e) {e.printStackTrace();}
-
-                Iterator iter = json.keys();
-                for (String key; iter.hasNext();) {
-                    key = (String) iter.next();
-                    try {
-                        list.add(new MenuItem(key, (float) json.getDouble(key)));
-                    } catch (JSONException e) {e.printStackTrace();}
-                }
-
-                selectedMenuItems.clear();
-                selectedMenuItems.addAll(list);
-            }
+            selectedMenuItems.clear();
+            ArrayList<MenuItem> list = savedInstanceState.getParcelableArrayList(TAG+"#selectedMenuItems");
+            selectedMenuItems.addAll(list);
         }
 
         builder.setView(view)
@@ -108,6 +88,10 @@ public class RatingsDialog extends DialogFragment {
                         ViewPager viewPager = ((DisplayMenuActivity) getActivity()).getDisplayMenuViewPager();
                         BaseMenuFragment bmf = ((DisplayMenuPagerAdapter) viewPager.getAdapter()).fragments.get(viewPager.getCurrentItem());
                         MenuListAdapter adapter = (MenuListAdapter) ((MySlideExpandableListAdapter) bmf.getListAdapter()).getWrappedAdapter();
+                      //TODO
+                      //try(RatingsManager rm = new RatingsManager(getActivity(), adapter.myBmf.getDh())) {
+                      //    rm.storeRatingsFor(selectedMenuItems, myRatingBar.getRating());
+                      //}
                         RatingsManager rm = new RatingsManager(getActivity(), adapter.myBmf.getDh());
                         rm.storeRatingsFor(selectedMenuItems, myRatingBar.getRating());
                         rm.closeDB();
@@ -135,23 +119,8 @@ public class RatingsDialog extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putFloat(TAG + "#rating", myRatingBar.getRating());
 
-        String tmp = "{";
-        for (int i = 0; i < selectedMenuItems.size(); i++) {
-            MenuItem obj = selectedMenuItems.get(i);
-            tmp+="\"" + obj.getName() +"\":" + Float.toString(obj.getRating());
-            if (i == selectedMenuItems.size()-1) break;
-            tmp+=", ";
-
-        }
-        tmp+="}";
-        JSONObject jsonSelectedMenuObjs = new JSONObject();
-        try {
-            jsonSelectedMenuObjs = new JSONObject(tmp);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        MyShrdPrfs.saveObject(TAG+"#selectedMenuItems", jsonSelectedMenuObjs.toString());
-        outState.putBoolean(TAG+"#selectedMenuItems", true);
+        ArrayList<MenuItem> selected = new ArrayList<MenuItem>(selectedMenuItems);
+        outState.putParcelableArrayList(TAG+"#selectedMenuItems", selected);
         super.onSaveInstanceState(outState);
     }
 
