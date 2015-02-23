@@ -3,3 +3,5 @@ build/
 *.iml
 .gradle/
 *.jar
+
+app/app-release.apk
