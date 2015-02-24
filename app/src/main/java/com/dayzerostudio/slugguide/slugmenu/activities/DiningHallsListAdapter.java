@@ -105,7 +105,7 @@ public class DiningHallsListAdapter extends ArrayAdapter<DiningHallItem> {
                                 vh.outer_layout.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        if (!MenuStorage.hasMenu(jmo.menu.getDh(), 0)) {
+                                        if (!MenuStorage.hasMenu(jmo.dh, 0)) {
                                             Toast.makeText(getContext(), myActivity.getString(R.string.dzs_sm_dhnotavailable), Toast.LENGTH_LONG).show();
                                             notifyDataSetChanged();
                                         }

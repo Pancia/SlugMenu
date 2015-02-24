@@ -1,15 +1,21 @@
 package com.dayzerostudio.slugguide.slugmenu.server;
 
-import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.dayzerostudio.slugguide.slugmenu.activities.DisplayMenuActivity;
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.JsonMenuObject;
 import com.dayzerostudio.slugguide.slugmenu.menu.storage.MenuStorage;
-import com.dayzerostudio.utils.network.JsonHttpRequest;
 import com.dayzerostudio.utils.network.MyConnectivity;
+
+import retrofit.ErrorHandler;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.http.GET;
+import retrofit.http.Path;
 
 /**
  * @version 2
@@ -33,6 +39,7 @@ public class AsyncHttpRequestManager extends AsyncTask<String, String, String> {
     private boolean showProgressDialog = false;
 
     private int myDtDate = 0;
+    private static String slugMenuElixirMenuServerBaseUrl = "https://hidden-mesa-8412.herokuapp.com";
 
     public AsyncHttpRequestManager(Activity activity) {
         this.myActivity = activity;
@@ -51,8 +58,6 @@ public class AsyncHttpRequestManager extends AsyncTask<String, String, String> {
     }
 
     public AsyncHttpRequestManager selectDiningHall(String dh) {
-        if (!MenuParser.dhs.contains(dh.toLowerCase()))
-            return null;
         this.dh = dh.toLowerCase();
         return this;
     }
@@ -81,23 +86,44 @@ public class AsyncHttpRequestManager extends AsyncTask<String, String, String> {
         }
     }
 
+    class MyErrorHandler implements ErrorHandler {
+        @Override
+        public Throwable handleError(RetrofitError cause) {
+            Response r = cause.getResponse();
+            if (r != null && r.getStatus() != 200) {
+                return new Exception(cause);
+            }
+            return cause;
+        }
+    }
+    interface ElixirMenuService {
+        @GET("/menu/{dh}/{dtdate}")
+        JsonMenuObject getMenu(@Path("dh") String dh, @Path("dtdate") String dtdate) throws Exception;
+    }
     @Override
     protected String doInBackground(String... arg0) {
         if (isCancelled())
             return null;
         JsonMenuObject json;
         if (!MenuStorage.hasMenu(dh, myDtDate)) {
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(slugMenuElixirMenuServerBaseUrl)
+                  //.setLogLevel(RestAdapter.LogLevel.BASIC)
+                    .setErrorHandler(new MyErrorHandler())
+                    .build();
+            ElixirMenuService service = restAdapter.create(ElixirMenuService.class);
             try {
-                json =  new JsonHttpRequest(dh, myDtDate).getJsonMenu();
-            } catch (NetworkErrorException e) {
+                json = service.getMenu(dh, String.valueOf(myDtDate));
+                Log.e(ElixirMenuService.class.getSimpleName(), json.toString());
+            } catch (Exception e) {
                 e.printStackTrace();
                 ((DisplayMenuActivity)myActivity).showGetInternetDialog();
                 this.success = false;
                 this.jmo = new JsonMenuObject();
-                this.jmo.menu.setDh(dh);
+                this.jmo.dh = dh;
                 return null;
             }
-            json.menu.setDh(dh);
+            json.dh = dh;
         } else {
             json = MenuStorage.getJsonMenuObject(dh, myDtDate);
         }
@@ -105,13 +131,13 @@ public class AsyncHttpRequestManager extends AsyncTask<String, String, String> {
             return null;
 
         MenuStorage.saveMenu(dh, json, myDtDate);
-        if (json.request.wasSuccessful()) {
+        if (json.wasSuccessful()) {
             this.success = true;
             this.jmo = json;
         } else {
             this.success = false;
             this.jmo = new JsonMenuObject();
-            this.jmo.menu.setDh(dh);
+            this.jmo.dh = dh;
             return null;
         }
         return null;

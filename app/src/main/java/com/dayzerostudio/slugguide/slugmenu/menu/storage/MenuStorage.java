@@ -1,6 +1,7 @@
 package com.dayzerostudio.slugguide.slugmenu.menu.storage;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.JsonMenuObject;
 import com.dayzerostudio.slugguide.slugmenu.menu.menuobjects.MenuItem;
@@ -54,7 +55,7 @@ public class MenuStorage {
 
         JsonMenuObject jmo = getJsonMenuObject(dh, dtdate);
 
-        listOfMenuItems = jmo.menu.getMeal(
+        listOfMenuItems = jmo.getMeal(
                 (meal.equals("breakfast")?JsonMenuObject.BREAKFAST
                     :meal.equals("lunch")?JsonMenuObject.LUNCH
                    :meal.equals("dinner")?JsonMenuObject.DINNER
@@ -77,7 +78,7 @@ public class MenuStorage {
             return false;
         JsonMenuObject jmo = getJsonMenuObject(dh, dtdate);
 
-        List<MenuItem> listOfMenuItems = jmo.menu.getMeal(
+        List<MenuItem> listOfMenuItems = jmo.getMeal(
                 (meal.equals("breakfast")?JsonMenuObject.BREAKFAST
                     :meal.equals("lunch")?JsonMenuObject.LUNCH
                    :meal.equals("dinner")?JsonMenuObject.DINNER

@@ -44,12 +44,12 @@ public class DiningHallItem {
     }
 
     public float getAvgMealRating(JsonMenuObject jmo, int meal) {
-        ArrayList<MenuItem> items = jmo.menu.getMeal(meal);
+        ArrayList<MenuItem> items = jmo.getMeal(meal);
         if (items == null)
             return -1;
         else if (items.isEmpty())
             return -2;
-        RatingsManager rm = new RatingsManager(this.myActivity, jmo.menu.getDh().replace("\"", ""));
+        RatingsManager rm = new RatingsManager(this.myActivity, jmo.dh.replace("\"", ""));
         List<MenuItem> menuItems = rm.getRatingsFor(items);
         rm.closeDB();
         if (menuItems == null)
